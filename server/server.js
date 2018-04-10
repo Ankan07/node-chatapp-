@@ -41,13 +41,17 @@ io.on('connection',(socket)=>{
 //
 // });
 
-socket.emit('newMessage',{from:'John',
-text:'see you then',
-createdAt:12121});
+// socket.emit('newMessage',{from:'John',
+// text:'see you then',
+// createdAt:12121});
 
 socket.on('createMessage',(message)=>{
 console.log('createMessage',message);
-
+io.emit('newMessage',{
+  from:message.from,
+  text:message.text,
+  createdAt:new Date().getTime()
+})
 });
 
 
