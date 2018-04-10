@@ -27,6 +27,33 @@ var io=socketIO.listen(server);
 
 app.use(express.static(publicPath));
 io.on('connection',(socket)=>{
+
+//emiting event
+//go to the log in browser i.e in the client side to see the New Email string being printed
+ //  socket.emit('newEmail',{from:'ankan@example.com',
+ //  text: 'HEy what up',
+ //  createdAt:123
+ // });
+// socket.on('createEmail',(newEmail)=>{
+//
+// console.log('createdEmail',newEmail);
+//
+//
+// });
+
+socket.emit('newMessage',{from:'John',
+text:'see you then',
+createdAt:12121});
+
+socket.on('createMessage',(message)=>{
+console.log('createMessage',message);
+
+});
+
+
+
+
+
   console.log("New user connected");
   socket.on('disconnect',()=>{console.log("user was disconnected");});
 });
