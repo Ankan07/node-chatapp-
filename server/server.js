@@ -27,6 +27,7 @@ var io=socketIO.listen(server);
 
 app.use(express.static(publicPath));
 io.on('connection',(socket)=>{
+    console.log("New user connected");
 
 //emiting event
 //go to the log in browser i.e in the client side to see the New Email string being printed
@@ -44,21 +45,52 @@ io.on('connection',(socket)=>{
 // socket.emit('newMessage',{from:'John',
 // text:'see you then',
 // createdAt:12121});
+socket.emit('newMessage',{
+  from:'Admin',
+  text:'Welcome to the chat app',
+  createdAt:new Date().getTime()
+
+});
+
+
+socket.broadcast.emit('newMessage',{
+  from:'Admin',
+  text:'New user joined',
+  createdAt:new Date().getTime()
+});
+
+
+
 
 socket.on('createMessage',(message)=>{
 console.log('createMessage',message);
+
+//
+
+
+
+
 io.emit('newMessage',{
   from:message.from,
   text:message.text,
   createdAt:new Date().getTime()
 })
+
+// socket.broadcast.emit('newMessage',{
+//
+//   from:message.from,
+//     text:message.text,
+//      createdAt:new Date().getTime()
+// })
+
+
 });
 
 
 
 
 
-  console.log("New user connected");
+
   socket.on('disconnect',()=>{console.log("user was disconnected");});
 });
 server.listen(port, () => {
